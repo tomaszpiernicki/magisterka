@@ -21,7 +21,6 @@ def generate_note(note: Note):
     else:
         np.pad(y, (0, y_real_length - len(y)))
 
-    print(real_length)
     return y, sr
 
 bpm = 100
@@ -32,7 +31,6 @@ metrum = [4, 4]
 tacts_to_generate = 2
 
 quarter_real_time = 60 / bpm
-print("querter_real_time: ", quarter_real_time)
 quarters_in_tact = 4
 quarters_to_fill = quarters_in_tact * tacts_to_generate
 

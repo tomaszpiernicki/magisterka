@@ -26,7 +26,6 @@ class NoteFactory:
             i += 1
             randNumer = randrange(len(file_paths))
             rand_audio = file_paths[randNumer]
-            print(rand_audio)
             note_id = self.extract_first_noteId(rand_audio)
             note_id = note_id[1:-1]
             note = Note(note_id, rand_audio, notes_stereotypes[0])
