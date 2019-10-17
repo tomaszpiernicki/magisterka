@@ -57,3 +57,4 @@ def generate_notes_array():
     plt.savefig("plot.png")
 
     librosa.output.write_wav("output.wav", merged_list, sr=sr[0])
+
