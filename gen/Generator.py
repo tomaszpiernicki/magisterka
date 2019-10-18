@@ -36,7 +36,7 @@ def generate_notes_array():
     quarters_to_fill = quarters_in_tact * tacts_to_generate
 
     noteFactory = NoteFactory()
-    notes_array = noteFactory.generateRandom(quarters_to_fill, notes_stereotypes)
+    notes_array = noteFactory.generate_random(quarters_to_fill, notes_stereotypes)
 
     y = []
     sr = []
@@ -54,7 +54,12 @@ def generate_notes_array():
 
     plt.figure()
     librosa.display.waveplot(merged_list, sr=sr[0])
-    plt.savefig("plot.png")
 
-    librosa.output.write_wav("output.wav", merged_list, sr=sr[0])
+    from os.path import expanduser
+    path_to_output = expanduser("~") + "/generator/"
 
+    plt.savefig(path_to_output + "plot.png")
+
+    librosa.output.write_wav(path_to_output + "output.wav", merged_list, sr=sr[0])
+
+    return
