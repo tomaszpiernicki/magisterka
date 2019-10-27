@@ -20,8 +20,23 @@ def generate_note(note: Note, period):
     else:
         np.pad(y, (0, y_real_length - len(y)))
 
+    y = fade_out(y)
+
     return y, sr
 
+def fade_out( y, duration = 4 ):
+    n = len(y) // duration
+    y_to_operate = y[ -n :]
+
+    b = 1
+    a = -b / n
+
+    for i in range(0 , n):
+        y_to_operate[i] *= (a * i + b)
+
+    y = y[: -n]
+    y = np.concatenate([y, y_to_operate])
+    return y
 
 def generate_notes_array():
     bpm = 100
@@ -53,7 +68,9 @@ def generate_notes_array():
     merged_list = np.asarray(merged_list)
 
     plt.figure()
-    librosa.display.waveplot(merged_list, sr=sr[0])
+
+    S = librosa.feature.melspectrogram(merged_list, sr[0])
+    librosa.display.specshow(librosa.power_to_db(S, ref=np.max))
 
     from os.path import expanduser
     path_to_output = expanduser("~") + "/generator/"

@@ -14,20 +14,21 @@ class NoteFactory:
     from os.path import expanduser
     path_to_samples = expanduser("~") + "/generator/samples"
 
-    def generate_random(self, quarters_to_fill, notes_stereotypes):
+    def generate_random(self, beats_to_fill, notes_stereotypes):
 
         file_paths = self.get_file_paths()
 
         i = 0
         notes = []
-        while i < quarters_to_fill:
+        while i < beats_to_fill:
             i += 1
-            rand_numer = randrange(len(file_paths))
-            rand_audio = file_paths[rand_numer]
+            rand_number = randrange(len(file_paths))
+            rand_audio = file_paths[rand_number]
             note_id = self.extract_first_noteId(rand_audio)
             note_id = note_id[1:-1]
             note = Note(note_id, rand_audio, notes_stereotypes[0])
             notes.append(note)
+
         return notes
 
     def extract_first_noteId(self, rand_audio):
