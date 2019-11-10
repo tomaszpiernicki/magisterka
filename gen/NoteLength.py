@@ -5,6 +5,4 @@ class NoteLength(Enum):
     Half = 2,
     Quarter = 1,
     Eighth = 1/2,
-    Sixteenth = 1/4,
-    ThirtySecond = 1/8,
-    SixtyFourth = 1/16,
+    Sixteenth = 1/4
