@@ -10,8 +10,8 @@ def threadFor(start, stop):
         print(item)
 
 if __name__ == '__main__':
-    for item in range(0, 1):
-        Generator.generate_random_melody()
+    for item in range(0, 56):
+        Generator.generate_random_melody(item)
         print(item)
 
     # for n in range(0, 500, 50):

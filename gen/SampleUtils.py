@@ -5,7 +5,7 @@ from gen import Note
 
 class SampleUtils:
     bpm = 100
-    period = 60 / bpm
+    period = 60.0 / bpm
 
     def full_service(self, note: Note):
         self.clean_up(note)
@@ -13,7 +13,7 @@ class SampleUtils:
         self.fade_out(note)
 
     def fit_sample_size(self, note: Note):
-        multiplier = note.sound_length.value[0]
+        multiplier = note.sound_length.value
         real_length = multiplier * self.period
         y_real_length = real_length * note.sound_br
 
