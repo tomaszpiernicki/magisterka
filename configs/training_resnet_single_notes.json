@@ -1,0 +1,9 @@
+{
+  "folds" : 100,
+  "midi_range" : [40, 84],
+  "experiment_name": "resnet_single_notes_v1",
+  "chpt_folder" : "E:/checkpoints",
+  "epochs" : 500,
+  "batch_size" : 16,
+  "feature_folder" : "E:/Dataset/chords/0.3/single/features/"
+}

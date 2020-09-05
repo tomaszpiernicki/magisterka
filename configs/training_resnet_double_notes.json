@@ -1,0 +1,10 @@
+{
+  "folds" : 100,
+  "midi_range" : [40, 84],
+  "experiment_name": "resnet_double_notes_v1",
+  "chpt_folder" : "E:/checkpoints",
+  "restart_checkpoint_path" : "E:/checkpoints/resnet_single_notes_v1/checkpoint_epoch498.pth",
+  "epochs" : 500,
+  "batch_size" : 16,
+  "feature_folder" : "E:/Dataset/chords/0.3/double/features/"
+}

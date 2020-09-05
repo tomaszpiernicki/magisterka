@@ -1,0 +1,22 @@
+{
+  "dry_data_paths" : "E:/Dataset/nsynth/guitar/audio/*",
+  "sr" : 16000,
+  "folds" : 100,
+  "midi_range" : [21, 108],
+  "version" : "0.4",
+  "chord_name" : "double_many",
+  "working_directory" :  "E:/Dataset/chords",
+  "audio_filename" : "data_fold",
+  "meta_filename" : "meta_fold",
+  "meta_directory" : "meta",
+  "audio_directory" : "audio",
+  "overlap_list" : [1, 2],
+  "overlap_prob" : [20, 80],
+  "zero_padding" : [0],
+  "max_real_time_mins" : 15,
+  "is_mono": true,
+  "nfft" : 1024,
+  "nb_mel_bands" : 40,
+  "fold_size" : 16,
+  "audible_threshold" : 3
+}
