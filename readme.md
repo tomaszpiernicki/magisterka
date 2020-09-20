@@ -1,7 +1,11 @@
 TODO:
+	-> feature post analyses tools
+	-> Conf mtrx:
+		-> wywalić TN
+		-> normalizacja TP(zielony), FP, FN
 	-> Cleanup:
 		-> audio generators (one framework)
 		-> module for plots and analyses
-	-> feature post analyses tools
-	
-		
+	-> Połączyć konfigurację eval i train
+	-> ustalić format zaspisu.
+		-> add key check for whole checkpoint and stats
