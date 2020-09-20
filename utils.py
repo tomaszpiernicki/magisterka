@@ -1,13 +1,14 @@
 import os
-import random
-import re
-
 import numpy as np
 
-import config
+from audio_feat_gen.data_gen_utls import pack_paths
+from old import config
 import glob
 
 import matplotlib.pyplot as plt
+
+import pandas as pd
+import seaborn as sns
 
 eps = np.finfo(np.float).eps
 
@@ -50,51 +51,6 @@ def split_in_seqs(data, subdivs):
     return data
 
 
-def extract_sub_dir(path):
-    try:
-        result = re.findall('-[0123456789][0123456789][0123456789]-', path)[0]
-    except Exception as IndexError:
-        result = ''
-    return result[1:-1]
-
-
-def pack_paths(files):
-    path_dict = {}
-
-    for file in files:
-        k = int(extract_sub_dir(file))
-        if k not in path_dict:
-            path_dict[k] = RoundRobin()
-        path_dict[k].add(file)
-
-    return path_dict
-
-
-class RoundRobin():
-    def __init__(self):
-        self.lst = []
-
-    def get(self):
-        to_return = self.lst[0]
-        self.lst = self.lst[1:]
-        self.add(to_return)
-        return to_return
-
-    def add(self, path):
-        self.lst.append(path)
-
-    def reverse(self):
-        self.lst.reverse()
-
-    def shuffle(self):
-        random.shuffle(self.lst)
-
-    def remove(self, index):
-        print("Not implemented yet.")
-
-    def __len__(self):
-        return len(self.lst)
-
 def pop_many(lst, n):
     newlist = lst[:n]
     del lst[:n]
@@ -104,10 +60,9 @@ def pop_many(lst, n):
 def match_lists_by_len(list_of_lists):
     lengths = [len(lst) for lst in list_of_lists]
     max_len = max(lengths)
-    for lst in list_of_lists:
-      len_diff = max_len - len(lst)
-      lst = np.pad(lst, (0, len_diff), "constant")
-      # lst.extend([0]*len_diff)
+    for idx, lst in enumerate(list_of_lists):
+        len_diff = max_len - len(lst)
+        list_of_lists[idx] = np.pad(lst, (0, len_diff), "constant")
     return list_of_lists
 
 
@@ -126,6 +81,7 @@ def plot_vaves():
     print(len(packed.keys()))
     plt.bar(packed.keys(), files_histogram)
     plt.show()
+
 
 def plot_featues():
     feat_file = "E:/Dataset/chords/0.3/quintiple/features/mbe_mon_fold11_467.npz"
@@ -148,6 +104,75 @@ def plot_featues():
     pass
 
 
+def print_confusion_matrix(confusion_matrix, axes, class_label, class_names, fontsize=6):
+    df_cm = pd.DataFrame(
+        confusion_matrix, index=class_names, columns=class_names,
+    )
+
+    try:
+        heatmap = sns.heatmap(df_cm, annot=True, cbar=False, fmt="d",  ax=axes)
+    except ValueError:
+        raise ValueError("Confusion matrix values must be integers.")
+    heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha='right', fontsize=fontsize)
+    heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=45, ha='right', fontsize=fontsize)
+    # axes.set_xlabel('True label')
+    # axes.set_ylabel('Predicted label')
+    axes.set_title(class_label, fontsize=fontsize)
+
+
+def run_confusion_matrix(vis_arr, labels):
+
+    rows = 8
+    fig, ax = plt.subplots(rows, round(len(labels)/rows), figsize=(19, 9))
+
+    for idx, (axes, cfs_matrix, label) in enumerate(zip(ax.flatten(), vis_arr, labels)):
+        print(f"Plotting: {idx+1}/{len(labels)}")
+        print_confusion_matrix(cfs_matrix.astype(np.int32), axes, label, ["T", "F"])
+
+    fig.tight_layout()
+    plt.show()
+
+
+def plot_adjacent_bars(data):
+
+    data = [xs[0] for xs in data]
+    x = list(range(0, len(data)))
+
+
+    # dx = (np.arange(data.shape[1])-data.shape[1]/2.)/(data.shape[1]+2.)
+    # d = 1./(data.shape[1]+2.)
+
+
+    fig, ax=plt.subplots()
+    # for i in range(data.shape[1]):
+    #     ax.bar(x+dx[i],data[:,i], width=d, label="label {}".format(i))
+
+    ax.bar(x, data)
+    plt.legend(framealpha=1)
+    plt.show()
+
+
+def plot_stacked_bars(data, labels: list = None):
+    x = np.arange(data.shape[0])
+
+    fig, ax = plt.subplots()
+    fig.figsize=(20, 3)
+    for i in range(data.shape[1]):
+        bottom = np.sum(data[:, 0:i], axis=1)
+        ax.bar(x, data[:, i], bottom=bottom, label="label {}".format(i), align='edge', width=0.8)
+
+    height = np.sum(data, 1)[0]
+    ax.set_ylim(bottom=height-115, top=height+5)
+    ax.set_xlabel("klucze midi")
+    ax.set_xticks(np.arange(len(labels)))
+    ax.set_xticklabels(labels, rotation=40, fontsize=8)
+    plt.legend(["TN", "FP", "FN", "TP"], framealpha=1)
+    plt.tight_layout()
+    plt.show()
+
+
 if __name__ == "__main__":
     # Histogram of aviable sample files
     plot_featues()
+
+    # run_confusion_matrix(conf_mtr_path)

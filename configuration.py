@@ -1,7 +1,14 @@
+import glob
 import json
+import os
+import re
+
 import utils
 import shutil
 import torch
+
+from audio_feat_gen.data_gen_utls import pack_paths
+
 
 class Config():
     def parse_config(self, config_file):
@@ -61,6 +68,10 @@ class GeneratorConfig(Config):
         self.make_class_labels(config["midi_range"])
 
         self.max_real_time = config["max_real_time_mins"] * 60  # convert minutes to seconds
+
+        files = glob.glob(self.dry_data_paths)
+        print(f"Found {len(files)} files.")
+        self.packed_paths = pack_paths(files)
 
         self.save_config()
 
@@ -133,3 +144,41 @@ class TrainingConfig(Config):
 
         utils.create_folder(f"{self.chpt_folder}/{self.experiment_name}/")
 
+
+class EvalConfig(Config):
+    def parse_config(self, config_file):
+        # self.working_directory = config["working_directory"]
+        # self.version = config["data_version"]
+        # self.chord_name = config["chord_name"]
+        # self.make_directories(self.working_directory, self.version, self.chord_name)
+
+        config = super().load_config(config_file)
+        self.config = config
+
+        self.experiment_name = config["experiment_name"]
+        self.outputs = config['outputs']
+        utils.create_folder(self.outputs)
+
+        self.restart_checkpoint = config.get("restart_checkpoint_path", False)
+        self.epochs = config["epochs"]
+        self.batch_size = config["batch_size"]
+        self.folds = config["folds"]
+        self.feature_folder = config["feature_folder"]
+
+        self.chpt_folder = config.get('chpt_folder', False)
+        self.checkpoint_range = config.get('checkpoint_range', False)
+
+        self.checkpoints = []
+        if self.chpt_folder and self.checkpoint_range:
+            chpts = os.listdir(self.chpt_folder)
+            for chpt in chpts:
+                # number = int(list(filter(str.isdigit, chpts))[0])
+                epoch = int(re.findall('[0123456789]+', chpt)[0])
+                if min(self.checkpoint_range) < epoch < max(self.checkpoint_range):
+                    self.checkpoints.append(f'{self.chpt_folder}{chpt}')
+        else:
+            self.checkpoints.append(self.restart_checkpoint)
+
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+        self.make_class_labels(config["midi_range"])

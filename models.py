@@ -3,7 +3,7 @@ from torchvision import models
 from torch import nn
 import torch.nn.functional as F
 
-import config
+from old import config
 
 
 class MultiClassifier(nn.Module):

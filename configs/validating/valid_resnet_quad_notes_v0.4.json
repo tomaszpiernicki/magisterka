@@ -1,0 +1,11 @@
+{
+  "folds" : 1,
+  "midi_range" : [21, 108],
+  "experiment_name": "valid_resnet_quad_notes_v0.4",
+  "epochs" : 10,
+  "batch_size" : 128,
+  "feature_folder" : "E:/Dataset/chords/0.4/quad_many_valid/features/",
+  "chpt_folder" : "i:/magisterka/checkpoints/resnet_quad_3_notes_v4/",
+  "checkpoint_range" : [6270, 6370],
+  "outputs": "E:/Dataset/chords/0.4/quad_many_valid/evaluations/"
+}

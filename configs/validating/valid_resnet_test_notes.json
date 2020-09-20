@@ -1,0 +1,11 @@
+{
+  "folds" : 1,
+  "midi_range" : [21, 108],
+  "experiment_name": "valid_resnet_test_notes",
+  "epochs" : 1,
+  "batch_size" : 32,
+  "feature_folder" : "e:\\Dataset\\chords\\test\\test_mix_one\\",
+  "chpt_folder" : "i:/magisterka/checkpoints/resnet_triple_3_notes_v4/",
+  "checkpoint_range" : [4771, 4871],
+  "outputs": "e:\\Dataset\\chords\\test\\test_mix_one\\evaluations/"
+}
