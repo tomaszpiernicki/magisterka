@@ -1,6 +1,6 @@
 import time
 
-from audio_feat_gen.make_chords import make_chords
+from make_chords import make_chords
 from configuration import GeneratorConfig
 
 

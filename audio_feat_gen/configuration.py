@@ -7,7 +7,7 @@ import utils
 import shutil
 import torch
 
-from audio_feat_gen.data_gen_utls import pack_paths
+from data_gen_utls import pack_paths
 
 
 class Config():

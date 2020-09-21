@@ -1,8 +1,8 @@
 import os
 import numpy as np
 
-from audio_feat_gen.data_gen_utls import pack_paths
-from old import config
+from data_gen_utls import pack_paths
+#from old import config
 import glob
 
 import matplotlib.pyplot as plt
@@ -66,21 +66,21 @@ def match_lists_by_len(list_of_lists):
     return list_of_lists
 
 
-def plot_vaves():
-    files = glob.glob(config.dry_data_path)
-    print(len(files))
-    packed = pack_paths(files)
-
-    tmp = list(packed.keys())
-    print(config.class_labels)
-    print(tmp)
-    for key in tmp:
-        if str(key) not in config.class_labels.keys():
-            packed.pop(key)
-    files_histogram = [len(rr) for rr in packed.values()]
-    print(len(packed.keys()))
-    plt.bar(packed.keys(), files_histogram)
-    plt.show()
+#def plot_vaves():
+#    files = glob.glob(config.dry_data_path)
+#    print(len(files))
+#    packed = pack_paths(files)
+#
+    #tmp = list(packed.keys())
+    #print(config.class_labels)
+    #print(tmp)
+    #for key in tmp:
+    #    if str(key) not in config.class_labels.keys():
+    #        packed.pop(key)
+    #files_histogram = [len(rr) for rr in packed.values()]
+    #print(len(packed.keys()))
+    #plt.bar(packed.keys(), files_histogram)
+    #plt.show()
 
 
 def plot_featues():

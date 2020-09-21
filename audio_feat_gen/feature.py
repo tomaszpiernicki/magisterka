@@ -5,7 +5,7 @@ import numpy as np
 
 from sklearn import preprocessing
 
-from audio_feat_gen.data_gen_utls import load_desc_file, load_audio, extract_mbe, save_in_parts
+from data_gen_utls import load_desc_file, load_audio, extract_mbe, save_in_parts
 
 
 def feature_normalization(evaluation_setup_folder, meta_file_name, fold, class_labels, feat_folder, is_mono):

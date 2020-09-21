@@ -1,9 +1,9 @@
-from librosa import output, load
+#from librosa import output, load
 import librosa
-from audio_feat_gen.data_gen_utls import extract_sub_dir
+from data_gen_utls import extract_sub_dir
 import numpy as np
 
-from externals.pyagc.agc.agc import tf_agc
+#from externals.pyagc.agc.agc import tf_agc
 
 
 class SoundFactory:
@@ -27,7 +27,7 @@ class SoundFactory:
         y_length = 0
         y = np.zeros(0)
         while y_length < length:
-            y_temp, sr = load(path, sr=self.sr)
+            y_temp, sr = librosa.load(path, sr=self.sr)
             y_temp = 0.8 * librosa.util.normalize(y_temp)
             # (y_temp, D, E) = tf_agc(y_temp, sr)
             y_temp_interval = librosa.effects.split(y_temp, 50)[0]
@@ -47,7 +47,7 @@ class SoundFactory:
 class SimpleSound:
     def __init__(self, path, midi=None, sr=16000, normalize=True):
         self.path = path
-        self.y, self.sr = load(path, sr=sr)
+        self.y, self.sr = librosa.load(path, sr=sr)
         if normalize:
             self.y = librosa.util.normalize(self.y)
         self.onset = self._detect_onset()

@@ -1,7 +1,7 @@
 import time
 
-from audio_feat_gen.generation_dict import generate_audio_with_dict
-from audio_feat_gen.make_chords import make_chords
+from generation_dict import generate_audio_with_dict
+from make_chords import make_chords
 from configuration import GeneratorConfig
 
 

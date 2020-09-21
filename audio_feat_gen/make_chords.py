@@ -1,13 +1,13 @@
 import itertools
 import random
 import pandas as pd
-from librosa import output
+#from librosa import output
 import librosa
 import numpy as np
 
 from utils import pop_many
 from utils import match_lists_by_len
-from audio_feat_gen.sounds import RandomChord, SimpleSound
+from sounds import RandomChord, SimpleSound
 
 
 def reverse(dct):
@@ -102,7 +102,7 @@ def generate_audio(overlap_list, overlap_prob, midi_range, packed, out_path, met
     sound = [sum(y) for y in zip(*sounds)]
 
     sound = librosa.util.normalize(sound)
-    output.write_wav(out_path, sound, sr)
+    librosa.output.write_wav(out_path, sound, sr)
     print(f"Writing wave file to {out_path}")
 
     meta_dict = list(itertools.chain(*meta_dicts))

@@ -4,16 +4,16 @@ from copy import deepcopy
 
 import librosa
 import pandas as pd
-from librosa import output
+#from librosa import output
 
-from audio_feat_gen.augmentations import Gain, AddNoise, PolarityInversion
-from audio_feat_gen.make_chords import append_to_meta, shuffle
+from augmentations import Gain, AddNoise, PolarityInversion
+from make_chords import append_to_meta, shuffle
 
 import numpy as np
 
 import matplotlib.pylab as plt
 
-from audio_feat_gen.sounds import SoundFactory
+from sounds import SoundFactory
 
 
 def resolve_capacity(overlap_prob, overlap_list, max_samples, class_labels):
@@ -148,7 +148,7 @@ def generation_dict_to_audio(packed_paths, sr, gen_dict, out_path, meta_out_path
             meta_list = append_to_meta(meta_list, key, out_path, current_time, relative_time_interval, key)
 
     audio_array = 0.3 * audio_array
-    output.write_wav(out_path, audio_array, sr)
+    librosa.output.write_wav(out_path, audio_array, sr)
     df = pd.DataFrame(meta_list)
     df.to_csv(meta_out_path, sep='\t', index=False, header=False)
     print(f"saving to :{out_path}")

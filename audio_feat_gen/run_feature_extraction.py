@@ -1,6 +1,8 @@
 import time
+import sys
+sys.path.insert(0, "..")
 
-from audio_feat_gen.feature import feature_extraction
+from feature import feature_extraction
 from configuration import FeatureXtractConfig
 
 

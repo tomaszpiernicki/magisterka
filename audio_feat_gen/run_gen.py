@@ -1,8 +1,11 @@
 import time
 
-from audio_feat_gen.run_feature_extraction import run_feature_extraction
-from audio_feat_gen.run_generation_dict import run_generation_dict
-from audio_feat_gen.run_make_chords import run_make_chords
+#import sys
+#sys.path.insert(0, "..")
+
+from run_feature_extraction import run_feature_extraction
+from run_generation_dict import run_generation_dict
+from run_make_chords import run_make_chords
 
 
 def run_gen(config):
@@ -19,7 +22,7 @@ if __name__ == '__main__':
     t = time.time()
 
     # run_gen("E:\Dataset\\transcription-crnn\configs\generating\\test_many_mix_notes.json")
-    run_gen_using_dict("E:\Dataset\\transcription-crnn\configs\generating\\triple_notes_0.5.json")
+    run_gen_using_dict("/home/piernik/magisterka/configs/generating/double_notes_0.5.json")
 
     elapsed = time.time() - t
     print(elapsed)
