@@ -21,7 +21,7 @@ cycler
 decorator
 defusedxml
 entrypoints
-fastai
+
 fastprogress
 freetype
 future
@@ -111,7 +111,6 @@ python
 python-dateutil
 pytorch
 pytz
-pywin32
 pywinpty
 pyyaml
 pyzmq
@@ -145,14 +144,13 @@ tornado
 tqdm
 traitlets
 urllib3
-vc
-vs2015_runtime
+
 wcwidth
 webencodings
 werkzeug
 wheel
 widgetsnbextension
-wincertstore
+
 winpty
 wrapt
 xz
@@ -160,3 +158,26 @@ zeromq
 zipp
 zlib
 zstd
+
+
+
+
+  - 
+  - pywin32
+  - 
+  - 
+  - m2w64-gcc-libs-core
+  - 
+  - 
+  - 
+  - m2w64-gmp
+  - pyfluidsynth
+  - m2w64-libwinpthread-git
+  - netron
+  - 
+  - pywinpty
+  - m2w64-gcc-libgfortran
+  - winpty
+  - icc_rt
+  - environment
+  - soundfile

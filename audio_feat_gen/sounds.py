@@ -13,12 +13,30 @@ class SoundFactory:
         self.augmentations = augmentations
 
     def _detect_onset(self, y):
-        offset_sample = librosa.effects.split(y, 50)[0][0]
-        return librosa.samples_to_time(offset_sample, self.sr)
+        try:
+            frame_len = 2048
+            if len(y) > frame_len:
+                onset_sample = librosa.effects.split(y, 50, frame_length=frame_len)[0][0]
+            else:
+                onset_sample = len(y) - 1
+        except:
+            pass
+            print("Error")
+        return librosa.samples_to_time(onset_sample, self.sr)
 
     def _detect_offset(self, y):
-        offset_sample = librosa.effects.split(y, 50)[0][1]
+        # offset_sample = librosa.effects.split(y, 50)[0][1]
         # y[offset_sample:] = 0
+
+        try:
+            frame_len = 2048
+            if len(y) > frame_len:
+                offset_sample = librosa.effects.split(y, 50, frame_length=frame_len)[0][1]
+            else:
+                offset_sample = len(y) - 1
+        except:
+            pass
+            print("Error")
         return librosa.samples_to_time(offset_sample, self.sr)
 
     def get_note(self, midi, interval):

@@ -13,6 +13,7 @@ import numpy as np
 
 import matplotlib.pylab as plt
 
+from utils import match_lists_by_len
 from sounds import SoundFactory
 
 
@@ -141,11 +142,17 @@ def generation_dict_to_audio(packed_paths, sr, gen_dict, out_path, meta_out_path
             print(f"Parsing: {int(100 * (key_idx + 1) / len(list(gen_dict.keys())))}%, {int(100 * (interval_idx + 1) / len(gen_dict[key]))}%")
 
             y, relative_time_interval = sound_factory.get_note(key, interval)
-
             interval = (int(interval[0]), int(interval[1]))
-            audio_array[slice(*interval)] = librosa.util.normalize(np.add(audio_array[slice(*interval)], y))
-            current_time = librosa.samples_to_time(interval[0], sr=sr)
-            meta_list = append_to_meta(meta_list, key, out_path, current_time, relative_time_interval, key)
+            audio_array_temp = audio_array[slice(*interval)]
+            (audio_array_temp, y) = match_lists_by_len([audio_array_temp, y])
+            added = np.add(audio_array_temp, y)
+            normal = librosa.util.normalize(added)
+            try:
+                audio_array[slice(*interval)] = normal
+                current_time = librosa.samples_to_time(interval[0], sr=sr)
+                meta_list = append_to_meta(meta_list, key, out_path, current_time, relative_time_interval, key)
+            except:
+                pass
 
     audio_array = 0.3 * audio_array
     librosa.output.write_wav(out_path, audio_array, sr)
