@@ -75,5 +75,12 @@ def feature_extraction(folds, evaluation_setup_folder, meta_file_name, audio_fol
         x_train, y_train = feature_normalization(evaluation_setup_folder, meta_file_name, fold, class_labels, feat_folder, is_mono)
         save_in_parts(x_train, y_train, fold, fold_size, feat_folder, is_mono, audible_threshold=audible_threshold)
 
+    # cleanup
+    for fold in range(folds):
+        train_file = f"{evaluation_setup_folder}/{meta_file_name}_{fold}.csv"
+        train_dict = load_desc_file(train_file, class_labels)
 
+        for key in train_dict.keys():
+            tmp_feat_file = os.path.join(feat_folder, '{}_{}.npz'.format(key, 'mon' if is_mono else 'bin'))
+            os.remove(tmp_feat_file)
 # END

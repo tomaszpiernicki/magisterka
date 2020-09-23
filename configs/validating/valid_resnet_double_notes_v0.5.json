@@ -1,0 +1,11 @@
+{
+  "folds" : 1,
+  "midi_range" : [21, 108],
+  "experiment_name": "valid_resnet_double_notes_v0.5",
+  "epochs" : 1,
+  "batch_size" : 32,
+  "feature_folder" : "E:/Dataset/0.5/valid_double_many/features/",
+  "chpt_folder" : "i:/magisterka/checkpoints/resnet_double_3_notes_v4/",
+  "checkpoint_range" : [3349, 3449],
+  "outputs": "E:/Dataset/chords/0.5/valid_double_many/evaluations/"
+}

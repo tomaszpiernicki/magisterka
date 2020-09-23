@@ -18,7 +18,6 @@ class Augmentation:
 
     def augment(self, x, sr):
         if self.enabled():
-            print("Aug applied")
             x = self.augment_fnc(x, sr)
         return x
 

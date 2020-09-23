@@ -1,9 +1,15 @@
+import sys
+
 import torch
 from torch import nn, optim
 
-from configuration import TrainingConfig, EvalConfig
-from models import MultiClassifier, OneChannelResnet
-from trainer import get_dataloaders, fit_model, train
+sys.path.insert(0, "./audio_feat_gen/")
+
+from audio_feat_gen.configuration import TrainingConfig, EvalConfig
+from models import OneChannelResnet
+from trainer import get_dataloaders, train
+
+
 
 
 def get_model(model_name, device, class_labels):
@@ -73,16 +79,22 @@ def run_training(config_file, eval_config_file):
     optimizer = get_optimizer(model)
 
     stats = {"loss": [], "f1": [], "acc": [], "eval_stats" : {}}
-    starting_epoch_idx = 0
 
     if restart_checkpoint:
         stats, starting_epoch_idx = load_checkpoint(restart_checkpoint, model, device, optimizer)
+
+    if False:
+        starting_epoch_idx = 0
 
     train(starting_epoch_idx, epochs, model, criterion, optimizer, train_dataloader, eval_dataloader, device, stats,
           configuration.config, chpt_folder, experiment_name)
 
 if __name__ == "__main__":
+
+
+
     # run_training("E:\\Dataset\\transcription-crnn\\configs\\training\\resnet_test_notes.json", eval_config_file="E:\\Dataset\\transcription-crnn\\configs\\validating\\valid_resnet_test_notes.json")
-    run_training("configs/training/resnet_quad_notes_v0.4.json", eval_config_file='configs/validating/valid_resnet_quad_notes_v0.4.json')
+    run_training("E:\\Dataset\\magisterka\\configs\\training\\resnet_double_notes_v0.5.json", eval_config_file='E:\\Dataset\\magisterka\\configs\\validating\\valid_resnet_double_notes_v0.5.json')
 
 # END
+op3

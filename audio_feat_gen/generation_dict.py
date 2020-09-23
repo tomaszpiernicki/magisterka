@@ -46,7 +46,6 @@ def get_keys_with_capacity(current_sample_idx, note, overlap, capacity, the_dict
         loop_count = 0
         while True:
             if capacity[midi_key] >= note and midi_key in temp_midi_rand.keys():    # TODO: Inf# loops?
-                print(f"midi_key: {midi_key}")
                 the_dict[midi_key].append((current_sample_idx, current_sample_idx + note))
                 capacity[midi_key] -= note
                 break
@@ -130,7 +129,7 @@ def analyze_gen_dict(gen_dict):
     plt.show()
 
 
-def generation_dict_to_audio(packed_paths, sr, gen_dict, out_path, meta_out_path, max_samples, augmentations):
+def generation_dict_to_audio(packed_paths, sr, gen_dict, out_path, meta_out_path, max_samples, augmentations, fold, folds):
     sound_factory = SoundFactory(packed_paths, sr, augmentations=augmentations)
 
     meta_list = []
@@ -139,7 +138,7 @@ def generation_dict_to_audio(packed_paths, sr, gen_dict, out_path, meta_out_path
         for interval_idx, interval in enumerate(gen_dict[key]):
             # print(
             #     f"Parsing key: {key}, {int(100 * key_idx / len(list(gen_dict.keys())))}%, interval: {interval}, {int(100 * interval_idx / len(gen_dict[key]))}%")
-            print(f"Parsing: {int(100 * (key_idx + 1) / len(list(gen_dict.keys())))}%, {int(100 * (interval_idx + 1) / len(gen_dict[key]))}%")
+            print(f"Parsing: {fold + 1/folds * 100}%, {int(100 * (key_idx + 1) / len(list(gen_dict.keys())))}%, {int(100 * (interval_idx + 1) / len(gen_dict[key]))}%")
 
             y, relative_time_interval = sound_factory.get_note(key, interval)
             interval = (int(interval[0]), int(interval[1]))
@@ -180,7 +179,7 @@ def generate_audio_with_dict(folds, audio_directory, audio_filename, meta_direct
         ]
 
         gen_dict = generation_dict(overlap_list, overlap_prob, sr, bpm, max_samples, midi_range)
-        generation_dict_to_audio(packed_paths, sr, gen_dict, out_path, meta_out_path, max_samples, augmentations)
+        generation_dict_to_audio(packed_paths, sr, gen_dict, out_path, meta_out_path, max_samples, augmentations, fold, folds)
 
 
 if __name__ == '__main__':

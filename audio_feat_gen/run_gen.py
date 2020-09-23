@@ -22,8 +22,8 @@ if __name__ == '__main__':
     t = time.time()
 
     # run_gen("E:\Dataset\\transcription-crnn\configs\generating\\test_many_mix_notes.json")
-    run_gen_using_dict("E:/Dataset/magisterka/configs/generating/double_notes_0.5.json")
-
+    # run_gen_using_dict("E:/Dataset/magisterka/configs/generating/double_notes_0.5.json")
+    run_gen_using_dict("E:/Dataset/magisterka/configs/generating/valid_double_notes_0.5.json")
     # run_gen_using_dict("/home/piernik/magisterka/configs/generating/double_notes_0.5.json")
 
     elapsed = time.time() - t

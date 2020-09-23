@@ -65,7 +65,6 @@ def pack_paths(files):
     path_dict = {}
 
     for file in files:
-        print(file)
         k = int(extract_sub_dir(file))
         if k not in path_dict:
             path_dict[k] = RoundRobin()
