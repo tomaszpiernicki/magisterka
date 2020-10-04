@@ -25,13 +25,15 @@ def run_feature_extraction(config_file=None):
     fold_size = configuration.fold_size
     audible_threshold = configuration.audible_threshold
 
+    feat_mode = configuration.feat_mode
+
     feature_extraction(folds, meta_directory, meta_filename, audio_folder, feat_folder, sr, is_mono, nfft,
-                       hop_len, nb_mel_bands, class_labels, fold_size, audible_threshold)
+                       hop_len, nb_mel_bands, class_labels, fold_size, audible_threshold, feat_mode)
 
 
 if __name__ == '__main__':
     t = time.time()
-    run_feature_extraction("E:\\Dataset\\transcription-crnn\\configs\\generating\\valid_quint_notes.json")
-
+    # run_feature_extraction("E:\Dataset\magisterka\configs\generating\double_notes_0.5.json")
+    run_feature_extraction("E:\\Dataset\\magisterka\\configs\\generating\\valid_single_notes_full_spectr.json")
     elapsed = time.time() - t
     print(elapsed)

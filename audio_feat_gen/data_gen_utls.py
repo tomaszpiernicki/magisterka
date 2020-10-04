@@ -7,6 +7,17 @@ import numpy as np
 import librosa
 from librosa import load
 
+import matplotlib.pylab as plt
+
+def plot_feature_map(feature, title):
+
+    plt.title(title)
+
+    xs = range(feature.shape[1])
+    plt.imshow(feature, aspect='auto', cmap='jet')
+    plt.colorbar()
+    plt.show()
+
 
 def load_audio(filename, sr):
     file_base, file_extension = os.path.splitext(filename)
@@ -123,8 +134,15 @@ def load_desc_file(_desc_file, class_labels):
     return _desc_dict
 
 
-def extract_mbe(_y, _sr, _nfft, _nb_mel):
+def extract_mbe(_y, _sr, _nfft, _nb_mel, mode="mel"):
+    _y /= np.max(np.abs(_y), axis=0)
     spec, n_fft = librosa.core.spectrum._spectrogram(y=_y, n_fft=_nfft, hop_length=int(_nfft/2), power=1)
-    mel_basis = librosa.filters.mel(sr=_sr, n_fft=_nfft, n_mels=_nb_mel)
-    with np.errstate(divide='ignore'):
-        return np.log(np.dot(mel_basis, spec))
+    # plot_feature_map(np.log(spec), 'spectrogram stft')
+
+    if mode == "spec":
+        return np.log(spec)
+    elif mode == "mel":
+        mel_basis = librosa.filters.mel(sr=_sr, n_fft=_nfft, n_mels=_nb_mel)
+        with np.errstate(divide='ignore'):
+            return np.log(np.dot(mel_basis, spec))
+        # plot_feature_map(to_return, 'melspectrogram')

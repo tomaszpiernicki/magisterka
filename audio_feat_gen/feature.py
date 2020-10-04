@@ -30,18 +30,17 @@ def feature_normalization(evaluation_setup_folder, meta_file_name, fold, class_l
     return x_train, y_train
 
 
-def extract_features(audio_folder, is_mono, nfft, nb_mel_bands, class_labels, desc_dict, hop_len, feat_folder, sr):
+def extract_features(audio_folder, is_mono, nfft, nb_mel_bands, class_labels, desc_dict, hop_len, feat_folder, sr, feat_mode):
     for audio_filename in os.listdir(audio_folder):
         audio_file = os.path.join(audio_folder, audio_filename)
-        print('Extracting features and label for : {}'.format(audio_file))
+        print(f'Extracting features and label for : {audio_file}, with mode {feat_mode}')
         y, sr = load_audio(audio_file, sr)
         mbe = None
-
         if is_mono:
-            mbe = extract_mbe(y, sr, nfft, nb_mel_bands).T
+            mbe = extract_mbe(y, sr, nfft, nb_mel_bands, mode=feat_mode).T
         else:
             for ch in range(y.shape[0]):
-                mbe_ch = extract_mbe(y[ch, :], sr, nfft, nb_mel_bands).T
+                mbe_ch = extract_mbe(y[ch, :], sr, nfft, nb_mel_bands, mode=feat_mode).T
                 if mbe is None:
                     mbe = mbe_ch
                 else:
@@ -58,7 +57,7 @@ def extract_features(audio_folder, is_mono, nfft, nb_mel_bands, class_labels, de
         np.savez(tmp_feat_file, mbe, label)
 
 
-def feature_extraction(folds, evaluation_setup_folder, meta_file_name, audio_folder, feat_folder, sr, is_mono, nfft, hop_len, nb_mel_bands, class_labels, fold_size, audible_threshold):
+def feature_extraction(folds, evaluation_setup_folder, meta_file_name, audio_folder, feat_folder, sr, is_mono, nfft, hop_len, nb_mel_bands, class_labels, fold_size, audible_threshold, feat_mode):
     # -----------------------------------------------------------------------
     # Feature extraction and label generation
     # -----------------------------------------------------------------------
@@ -68,7 +67,7 @@ def feature_extraction(folds, evaluation_setup_folder, meta_file_name, audio_fol
         desc_dict.update(load_desc_file(file, class_labels))
 
     # Extract features for all audio files, and save it along with labels
-    extract_features(audio_folder, is_mono, nfft, nb_mel_bands, class_labels, desc_dict, hop_len, feat_folder, sr)
+    extract_features(audio_folder, is_mono, nfft, nb_mel_bands, class_labels, desc_dict, hop_len, feat_folder, sr, feat_mode)
 
     # Feature Normalization
     for fold in range(folds):

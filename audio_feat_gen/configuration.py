@@ -104,6 +104,8 @@ class FeatureXtractConfig(Config):
         self.win_len = self.nfft
         self.hop_len = self.win_len / 2
 
+        self.feat_mode = config.get("feat_type", "mel")
+
         self.save_config()
 
     def save_config(self):
@@ -129,6 +131,7 @@ class TrainingConfig(Config):
         self.batch_size = config["batch_size"]
         self.folds = config["folds"]
         self.feature_folder = config["feature_folder"]
+        self.model_name = config.get("model_name", "resnet18")
 
         # self.working_directory = config["working_directory"]
         # self.version = config["data_version"]

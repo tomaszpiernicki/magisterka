@@ -6,5 +6,5 @@
   "epochs" : 1000,
   "batch_size" : 32,
   "feature_folder" : "E:/Dataset/0.5/double_many/features/",
-  "restart_checkpoint_path" : "i:\\magisterka\\checkpoints\\resnet_double_notes_v5\\checkpoint_epoch215.pth"
+  "restart_checkpoint_path" : "i:\\magisterka\\checkpoints\\resnet_double_notes_v5\\checkpoint_epoch333.pth"
 }

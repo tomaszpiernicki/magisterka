@@ -1,0 +1,23 @@
+{
+  "dry_data_paths" : "e:\\Dataset\\nsynth\\dataset\\train\\nsynth-train\\audio\\guitar*",
+  "sr" : 16000,
+  "folds" : 40,
+  "midi_range" : [40, 84],
+  "version" : "0.6",
+  "chord_name" : "single_spectr",
+  "working_directory" :  "e:\\Dataset",
+  "audio_filename" : "data_fold",
+  "meta_filename" : "meta_fold",
+  "meta_directory" : "meta",
+  "audio_directory" : "audio",
+  "overlap_list" : [1],
+  "overlap_prob" : [100],
+  "zero_padding" : [0],
+  "max_real_time_mins" : 60,
+  "is_mono": true,
+  "nfft" : 1024,
+  "nb_mel_bands" : 40,
+  "fold_size" : 16,
+  "audible_threshold" : 3,
+  "feat_type": "spec"
+}
