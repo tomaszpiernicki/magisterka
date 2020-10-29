@@ -4,8 +4,8 @@
   "experiment_name": "valid_resnet_double_notes_v0.4",
   "epochs" : 10,
   "batch_size" : 128,
-  "feature_folder" : "E:/Dataset/chords/0.4/double_many_valid/features/",
+  "feature_folder" : "i:/magisterka/chords/0.4/double_many_valid/features/",
   "chpt_folder" : "i:/magisterka/checkpoints/resnet_double_3_notes_v4/",
   "checkpoint_range" : [3349, 3449],
-  "outputs": "E:/Dataset/chords/0.4/double_many_valid/evaluations/"
+  "outputs": "I:/magisterka/chords/0.4/double_many_valid/evaluations/"
 }

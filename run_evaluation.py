@@ -4,9 +4,9 @@ import re
 import torch
 from torch import nn, optim
 
-from configuration import EvalConfig
+from audio_feat_gen.configuration import EvalConfig
 from models import MultiClassifier, OneChannelResnet
-from utils import run_confusion_matrix, plot_adjacent_bars, plot_stacked_bars
+from audio_feat_gen.utils import run_confusion_matrix, plot_adjacent_bars, plot_stacked_bars
 
 from trainer import get_dataloaders, fit_model
 
@@ -75,9 +75,9 @@ def run_evaluation(config_file, from_file=None):
 
 
 if __name__ == "__main__":
-    run_evaluation("configs/validating/valid_resnet_quad_notes_v0.4.json", from_file="e:\\Dataset\\chords\\0.4\\quad_many_valid\\evaluations\\valid_resnet_quad_notes_v0.4.pth")
+    #run_evaluation("configs/validating/valid_resnet_quad_notes_v0.4.json", from_file="e:\\Dataset\\chords\\0.4\\quad_many_valid\\evaluations\\valid_resnet_quad_notes_v0.4.pth")
     # run_evaluation("configs/validating/valid_resnet_triple_notes_v0.4.json") #, from_file="e:\\Dataset\\chords\\0.4\\triple_many_valid\\evaluations\\valid_resnet_triple_notes_v0.4.pth")
-    # run_evaluation("configs/validating/valid_resnet_double_notes_v0.4.json", from_file="e:\\Dataset\\chords\\0.4\\double_many_valid\\evaluations\\valid_resnet_double_notes_v0.4.pth")
+    run_evaluation("configs/validating/valid_resnet_double_notes_v0.4.json") #, from_file="e:\\Dataset\\chords\\0.4\\double_many_valid\\evaluations\\valid_resnet_double_notes_v0.4.pth")
     # run_evaluation("configs/validating/valid_resnet_single_notes_v0.4.json", from_file='e:\\Dataset\\chords\\0.4\\single_many_valid\\evaluations\\valid_resnet_single_notes_v0.4.pth')
 
 # END

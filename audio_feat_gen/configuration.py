@@ -2,12 +2,18 @@ import glob
 import json
 import os
 import re
+import sys
 
-import utils
+from audio_feat_gen import data_gen_utls
+from audio_feat_gen.utils import create_folder
+
+sys.path.insert(0, ".")
+
+# import utils
 import shutil
 import torch
 
-from data_gen_utls import pack_paths
+# from data_gen_utls import pack_paths
 
 
 class Config():
@@ -61,9 +67,9 @@ class GeneratorConfig(Config):
 
         self.make_directories(self.working_directory, self.version, self.chord_name)
 
-        utils.create_folder(self.out_dir)
-        utils.create_folder(self.meta_directory)
-        utils.create_folder(self.audio_directory)
+        create_folder(self.out_dir)
+        create_folder(self.meta_directory)
+        create_folder(self.audio_directory)
 
         self.make_class_labels(config["midi_range"])
 
@@ -71,7 +77,7 @@ class GeneratorConfig(Config):
 
         files = glob.glob(self.dry_data_paths)
         print(f"Found {len(files)} files.")
-        self.packed_paths = pack_paths(files)
+        self.packed_paths = data_gen_utls.pack_paths(files)
 
         self.save_config()
 
@@ -97,7 +103,7 @@ class FeatureXtractConfig(Config):
         self.audible_threshold = config.get("audible_threshold", 2)
 
         self.make_directories(self.working_directory, self.version, self.chord_name)
-        utils.create_folder(self.feature_folder)
+        create_folder(self.feature_folder)
 
         self.make_class_labels(config["midi_range"])
 
@@ -139,13 +145,13 @@ class TrainingConfig(Config):
         # self.make_directories(self.working_directory, self.version, self.chord_name)
 
         self.chpt_folder = config["chpt_folder"]
-        utils.create_folder(self.chpt_folder)
+        create_folder(self.chpt_folder)
 
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
         self.make_class_labels(config["midi_range"])
 
-        utils.create_folder(f"{self.chpt_folder}/{self.experiment_name}/")
+        create_folder(f"{self.chpt_folder}/{self.experiment_name}/")
 
 
 class EvalConfig(Config):
@@ -160,7 +166,7 @@ class EvalConfig(Config):
 
         self.experiment_name = config["experiment_name"]
         self.outputs = config['outputs']
-        utils.create_folder(self.outputs)
+        create_folder(self.outputs)
 
         self.restart_checkpoint = config.get("restart_checkpoint_path", False)
         self.epochs = config["epochs"]

@@ -1,10 +1,10 @@
 {
-  "dry_data_paths" : "e:\\Dataset\\nsynth\\dataset\\test\\nsynth-test\\audio\\guitar*",
+  "dry_data_paths" : "e:\\Dataset\\nsynth\\dataset\\valid\\nsynth-valid\\audio\\guitar*",
   "sr" : 16000,
   "folds" : 1,
   "midi_range" : [40, 84],
   "version" : "0.6",
-  "chord_name" : "test_many",
+  "chord_name" : "test_quad",
   "working_directory" :  "e:\\Dataset",
   "audio_filename" : "data_fold",
   "meta_filename" : "meta_fold",

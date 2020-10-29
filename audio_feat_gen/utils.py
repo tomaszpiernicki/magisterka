@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-from data_gen_utls import pack_paths
+# from data_gen_utls import pack_paths
 #from old import config
 import glob
 

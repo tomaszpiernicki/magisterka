@@ -11,9 +11,9 @@ from sklearn.metrics import multilabel_confusion_matrix, classification_report
 import numpy as np
 
 from audio_dataset import AudioDataset
-from configuration import TrainingConfig
+from audio_feat_gen.configuration import TrainingConfig
 from models import MultiClassifier, OneChannelResnet
-from utils import run_confusion_matrix
+from audio_feat_gen.utils import run_confusion_matrix
 
 # from torchsummary import summary
 

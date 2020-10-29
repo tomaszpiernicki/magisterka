@@ -26,7 +26,7 @@ def run_generation_dict(config_file=None):
     packed = configuration.packed_paths
 
     generate_audio_with_dict(folds, audio_directory, audio_filename, meta_directory, meta_filename, packed, overlap_list,
-                overlap_prob, midi_range, class_labels, zero_padding, max_real_time, sr, bpm = 60)
+                overlap_prob, midi_range, class_labels, zero_padding, max_real_time, sr, bpm=60)
 
     # make_chords(folds, audio_directory, audio_filename, meta_directory, meta_filename, packed, overlap_list,
     #             overlap_prob, midi_range, class_labels, zero_padding, max_real_time, sr)
@@ -34,7 +34,7 @@ def run_generation_dict(config_file=None):
 if __name__ == '__main__':
     t = time.time()
 
-    run_generation_dict("E:\Dataset\\transcription-crnn\configs\generating\\triple_notes_0.5.json")
+    run_generation_dict("E:\Dataset\\magisterka\configs\generating\\test_quad.json")
 
     elapsed = time.time() - t
     print(elapsed)

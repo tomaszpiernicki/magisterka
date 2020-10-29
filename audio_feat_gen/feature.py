@@ -5,7 +5,8 @@ import numpy as np
 
 from sklearn import preprocessing
 
-from data_gen_utls import load_desc_file, load_audio, extract_mbe, save_in_parts
+# import  data_gen_utls import load_desc_file, load_audio, extract_mbe, save_in_parts
+from audio_feat_gen.data_gen_utls import load_desc_file, load_audio, extract_mbe, save_in_parts
 
 
 def feature_normalization(evaluation_setup_folder, meta_file_name, fold, class_labels, feat_folder, is_mono):
@@ -55,6 +56,36 @@ def extract_features(audio_folder, is_mono, nfft, nb_mel_bands, class_labels, de
             label[frame_start[ind]:frame_end[ind], val] = 1
         tmp_feat_file = os.path.join(feat_folder, '{}_{}.npz'.format(audio_filename, 'mon' if is_mono else 'bin'))
         np.savez(tmp_feat_file, mbe, label)
+
+
+def extract_features_single_file(wav_file, tmp_folder, is_mono = True, nfft=1024, nb_mel_bands = 40, feat_mode = "spectr"):
+    y, sr = load_audio(wav_file, 16000)
+    mbe = None
+    if is_mono:
+        mbe = extract_mbe(y, sr, nfft, nb_mel_bands, mode=feat_mode).T
+    else:
+        for ch in range(y.shape[0]):
+            mbe_ch = extract_mbe(y[ch, :], sr, nfft, nb_mel_bands, mode=feat_mode).T
+            if mbe is None:
+                mbe = mbe_ch
+            else:
+                mbe = np.concatenate((mbe, mbe_ch), 1)
+    tmp_feat_file = os.path.join(tmp_folder, '{}_{}.npz'.format(wav_file, 'mon' if is_mono else 'bin'))
+    np.savez(tmp_feat_file, mbe)
+    return tmp_feat_file
+
+def normalize_sigle_file(tmp_feat_file):
+
+    dmp = np.load(tmp_feat_file)
+    tmp_mbe = dmp['arr_0']
+    x_train = tmp_mbe
+
+    # Normalize the training data, and scale the testing data using the training data weights
+    scaler = preprocessing.StandardScaler()
+
+    x_train[x_train == float('-inf')] = sys.float_info.min  # minimal posdible value
+    x_train = scaler.fit_transform(x_train)
+    return x_train
 
 
 def feature_extraction(folds, evaluation_setup_folder, meta_file_name, audio_folder, feat_folder, sr, is_mono, nfft, hop_len, nb_mel_bands, class_labels, fold_size, audible_threshold, feat_mode):

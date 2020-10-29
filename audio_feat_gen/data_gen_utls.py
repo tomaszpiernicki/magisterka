@@ -123,14 +123,44 @@ def save_in_parts(inputs, targets, fold_idx, fold_size, feat_folder, is_mono, au
     print(f"Saved:{n_small_folds - skipped}")
     print(f"Skipped{skipped}")
 
-def load_desc_file(_desc_file, class_labels):
+
+
+def save_in_parts_signle(inputs, fold_size, temp_folder, fold_idx, is_mono  = True):
+    reminder = inputs.shape[0] % fold_size
+
+    inputs = inputs[0:-reminder][:]
+
+    full_time_len = inputs.shape[0]
+    n_small_folds = int(full_time_len / fold_size)
+
+    inputs = inputs.reshape(n_small_folds, fold_size, inputs.shape[1])
+
+    skipped = 0
+    for idx in range(n_small_folds):
+        temp_input = inputs[idx]
+
+        # normalized_feat_file = os.path.join(feat_folder, 'mbe_{}_fold{}_{}.npz'.format('mon' if is_mono else 'bin', fold_idx, idx))
+
+
+        print("Saving.")
+        normalized_feat_file = os.path.join(f"{temp_folder}/features", 'mbe_{}_fold{}_{}.npz'.format('mon' if is_mono else 'bin',
+                                                                                       fold_idx, idx))
+        np.savez(normalized_feat_file, temp_input)
+    print(f"Saved:{n_small_folds - skipped}")
+    print(f"Skipped{skipped}")
+
+
+def load_desc_file(_desc_file, class_labels, map_midis = True):
     _desc_dict = dict()
     for line in open(_desc_file):
         words = line.strip().split('\t')
         name = words[0].split('/')[-1]
         if name not in _desc_dict:
             _desc_dict[name] = list()
-        _desc_dict[name].append([float(words[2]), float(words[3]), class_labels[str(int(words[-1]))]])
+        if map_midis:
+            _desc_dict[name].append([float(words[2]), float(words[3]), class_labels[str(int(words[-1]))]])
+        else:
+            _desc_dict[name].append([float(words[2]), float(words[3]), int(words[-1])])
     return _desc_dict
 
 

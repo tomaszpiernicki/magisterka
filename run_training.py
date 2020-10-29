@@ -10,8 +10,6 @@ from models import OneChannelResnet
 from trainer import get_dataloaders, train
 
 
-
-
 def get_model(model_name, device, class_labels):
     print(f"Loading model: {model_name}")
     print(f"Using device: {device}")
@@ -97,4 +95,3 @@ if __name__ == "__main__":
     run_training("E:\\Dataset\\magisterka\\configs\\training\\resnet_double_notes_v0.5.json", eval_config_file='E:\\Dataset\\magisterka\\configs\\validating\\valid_resnet_double_notes_v0.5.json')
 
 # END
-op3
